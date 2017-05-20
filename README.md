@@ -3,7 +3,7 @@ Ansible playbook for Trellis that manage database and uploads migration. Inspire
 
 ## ⚙️ Installation
 1. Copy all `*.yml` files into Trellis root folder
-2. Copy all bin/*.sh` files into Trellis bin folder
+2. Copy all `bin/*.sh` files into Trellis bin folder
 3. Set alias for host files as mentioned below in the hosts configuration section
 
 ## 🏄 Usage
