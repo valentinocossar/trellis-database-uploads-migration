@@ -1,0 +1,57 @@
+# ansible-playbook database-pull.yml -e "env=staging site=example.com"
+---
+- name: Pull database from {{ env }} to development
+  hosts: web:&{{ env }}
+  remote_user: "{{ web_user }}"
+
+  vars:
+    project_root: "{{ www_root }}/{{ site }}"
+    project_web_dir: "{{ project_root }}/current"
+    from_host: "{{ hostvars[env] }}"
+    url_from: "{{ from_host.wordpress_sites[site].site_hosts.0.canonical }}"
+    url_to: "{{ hostvars.development.wordpress_sites[site].site_hosts.0.canonical }}"
+    dump_file: "{{ site | regex_replace('\\.+', '_') }}_db_dump.sql.gz"
+    current_date_and_time: "{{ ansible_date_time.date | regex_replace('\\-+', '_') }}_{{ ansible_date_time.hour }}_{{ ansible_date_time.minute }}_{{ ansible_date_time.second }}"
+    backup_file: "{{ site | regex_replace('\\.+', '_') }}_development_{{ current_date_and_time }}.sql.gz"
+
+  tasks:
+  - name: Create database dump on {{ env }}
+    shell: wp db export --allow-root - | gzip > {{ dump_file }}
+    args:
+      chdir: "{{ project_web_dir }}"
+
+  - name: Pull database dump from {{ env }} to development
+    fetch:
+      src: "{{project_web_dir}}/{{ dump_file }}"
+      dest: "../{{ site }}"
+      flat: yes
+
+  - name: Delete database dump from {{ env }}
+    file:
+      path: "{{ project_web_dir }}/{{ dump_file }}"
+      state: absent
+
+  - name: Export development database before importing the dump (backup)
+    delegate_to: development
+    shell: wp db export - | gzip > database_backup/{{ backup_file }}
+    args:
+      chdir: "{{ project_web_dir }}"
+
+  - name: Import database dump on development
+    delegate_to: development
+    shell: gzip -c -d {{ dump_file }} | wp db import -
+    args:
+      chdir: "{{ project_web_dir }}"
+
+  - name: Delete database dump from development
+    delegate_to: development
+    file:
+      path: "{{ project_web_dir }}/{{ dump_file }}"
+      state: absent
+
+  - name: Search for {{ url_from }} and replace with {{ url_to }} on development
+    delegate_to: development
+    command: wp search-replace '//{{ url_from }}' '//{{ url_to }}' --allow-root --all-tables
+    args:
+      chdir: "{{ project_web_dir }}"
+    tags: ['search-replace']

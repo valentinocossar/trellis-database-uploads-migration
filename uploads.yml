@@ -1,0 +1,31 @@
+---
+- name: Sync uploads between environments
+  hosts: web:&{{ env }}
+  remote_user: "{{ web_user }}"
+
+  vars:
+    project: "{{ wordpress_sites[site] }}"
+    project_root: "{{ www_root }}/{{ site }}"
+
+  tasks:
+  # ansible-playbook uploads.yml -e "env=staging site=example.com mode=push"
+  - name: Push uploads
+    synchronize:
+      src: "{{ project.local_path }}/web/app/uploads/"
+      dest: "{{ project_root }}/current/web/app/uploads/"
+      mode: push
+      delete: yes
+      recursive: yes
+      rsync_opts: --exclude=.DS_Store
+    when: mode is defined and mode == "push"
+
+  # ansible-playbook uploads.yml -e "env=staging site=example.com mode=pull"
+  - name: Pull uploads
+    synchronize:
+      src: "{{ project_root }}/current/web/app/uploads/"
+      dest: "{{ project.local_path }}/web/app/uploads/"
+      mode: pull
+      delete: yes
+      recursive: yes
+      rsync_opts: --exclude=.DS_Store
+    when: mode is defined and mode == "pull"

@@ -1,0 +1,38 @@
+# ansible-playbook database-backup.yml -e "env=staging site=example.com"
+---
+- name: Backup {{ env }} database
+  hosts: web:&{{ env }}
+  remote_user: "{{ web_user }}"
+
+  vars:
+    project_root: "{{ www_root }}/{{ site }}"
+    project_web_dir: "{{ project_root }}/current"
+    current_date_and_time: "{{ ansible_date_time.date | regex_replace('\\-+', '_') }}_{{ ansible_date_time.hour }}_{{ ansible_date_time.minute }}_{{ ansible_date_time.second }}"
+    backup_file: "{{ site | regex_replace('\\.+', '_') }}_{{ env }}_{{ current_date_and_time }}.sql.gz"
+
+  tasks:
+  - name: Export {{ env }} database
+    delegate_to: development
+    shell: wp db export - | gzip > database_backup/{{ backup_file }}
+    args:
+      chdir: "{{ project_web_dir }}"
+    when: env is defined and env == "development"
+
+  - name: Export {{ env }} database
+    shell: wp db export - | gzip > {{ backup_file }}
+    args:
+      chdir: "{{ project_web_dir }}"
+    when: env is defined and env != "development"
+
+  - name: Pull exported database from {{ env }} to development
+    fetch:
+      src: "{{project_web_dir}}/{{ backup_file }}"
+      dest: "../{{ site }}/database_backup"
+      flat: yes
+    when: env is defined and env != "development"
+
+  - name: Delete exported database from {{ env }}
+    file:
+      path: "{{ project_web_dir }}/{{ backup_file }}"
+      state: absent
+    when: env is defined and env != "development"
