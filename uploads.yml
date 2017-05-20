@@ -16,8 +16,9 @@
       mode: push
       delete: yes
       recursive: yes
-      rsync_opts: --exclude=.DS_Store
+      rsync_opts: --exclude=.DS_Store --stats
     when: mode is defined and mode == "push"
+    register: output
 
   # ansible-playbook uploads.yml -e "env=staging site=example.com mode=pull"
   - name: Pull uploads
@@ -27,5 +28,8 @@
       mode: pull
       delete: yes
       recursive: yes
-      rsync_opts: --exclude=.DS_Store
+      rsync_opts: --exclude=.DS_Store --stats
     when: mode is defined and mode == "pull"
+    register: output
+
+  - debug: var=output.stdout_lines

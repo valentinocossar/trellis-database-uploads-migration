@@ -36,4 +36,11 @@ if [[ ! -e $HOSTS_FILE ]]; then
   exit 0
 fi
 
-$UPLOADS_CMD
+echo -e -n "Are you sure? (Y/n) "
+read -n 1 answer
+echo " "
+if [ "$answer" == "Y" ]; then
+  $UPLOADS_CMD
+else
+  echo "Operation aborted."
+fi
