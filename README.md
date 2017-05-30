@@ -30,7 +30,7 @@ development
 ### Staging
 
 ```
-staging your_server_hostname
+staging ansible_host=your_server_hostname
 
 [staging]
 staging
@@ -42,7 +42,7 @@ staging
 ### Production
 
 ```
-production your_server_hostname
+production ansible_host=your_server_hostname
 
 [production]
 production
