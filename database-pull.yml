@@ -15,6 +15,13 @@
     backup_file: "{{ site | regex_replace('\\.+', '_') }}_development_{{ current_date_and_time }}.sql.gz"
 
   tasks:
+  - name: Create database_backup directory inside {{ site }} if it doesn't exist
+    delegate_to: development
+    file:
+      path: "{{ project_web_dir }}/database_backup"
+      state: directory
+      mode: 0755
+
   - name: Create database dump on {{ env }}
     shell: wp db export --allow-root - | gzip > {{ dump_file }}
     args:

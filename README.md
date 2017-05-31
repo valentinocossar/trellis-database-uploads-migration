@@ -2,9 +2,15 @@
 Ansible playbook for Trellis that manage database and uploads migration. Inspired by [hamedb89/trellis-db-push-and-pull](https://github.com/hamedb89/trellis-db-push-and-pull).
 
 ## ⚙️ Installation
-1. Copy all `*.yml` files into Trellis root folder
-2. Copy all `bin/*.sh` files into Trellis bin folder
-3. Set alias for host files as mentioned below in the hosts configuration section
+1. [Download it](https://github.com/valentinocossar/trellis-database-and-uploads-migration/archive/master.zip)
+2. Copy all `*.yml` files into Trellis root folder
+3. Copy all `bin/*.sh` files into Trellis bin folder
+4. Add `database_backup/*` to the end of the Bedrock `.gitignore` file
+5. Set alias for host files as mentioned below in the hosts configuration section
+
+### ‼️ Important
+* The `database_backup` folder inside Bedrock will be automatically created if doesn't exist
+* I recommend you to not perform `git` operations while running `./bin/database.sh` command, because this tool uses the Bedrock folder as temp folder to store database dump before importing/exporting it and then delete it
 
 ## 🏄 Usage
 * Run `./bin/uploads.sh <environment> <site name> <mode>`
