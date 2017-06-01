@@ -1,6 +1,6 @@
 # ansible-playbook database-backup.yml -e "env=staging site=example.com"
 ---
-- name: Backup {{ env }} database
+- name: Backup {{ site }} {{ env }} database
   hosts: web:&{{ env }}
   remote_user: "{{ web_user }}"
 
@@ -14,7 +14,7 @@
     backup_file: "{{ site | regex_replace('\\.+', '_') }}_{{ env }}_{{ current_date_and_time }}.sql.gz"
 
   tasks:
-  - name: Create database_backup directory inside {{ site }} if it doesn't exist
+  - name: Create database_backup directory if it doesn't exist
     delegate_to: development_host
     file:
       path: "{{ project_web_dir }}/database_backup"
