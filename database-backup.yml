@@ -7,19 +7,22 @@
   vars:
     project_root: "{{ www_root }}/{{ site }}"
     project_web_dir: "{{ project_root }}/current"
+    host: "{{ env }}_host"
+    from_host: "{{ hostvars[host] }}"
+    local_bedrock_dir: "{{ from_host.wordpress_sites[site].local_path }}"
     current_date_and_time: "{{ ansible_date_time.date | regex_replace('\\-+', '_') }}_{{ ansible_date_time.hour }}_{{ ansible_date_time.minute }}_{{ ansible_date_time.second }}"
     backup_file: "{{ site | regex_replace('\\.+', '_') }}_{{ env }}_{{ current_date_and_time }}.sql.gz"
 
   tasks:
   - name: Create database_backup directory inside {{ site }} if it doesn't exist
-    delegate_to: development
+    delegate_to: development_host
     file:
       path: "{{ project_web_dir }}/database_backup"
       state: directory
       mode: 0755
 
   - name: Export {{ env }} database
-    delegate_to: development
+    delegate_to: development_host
     shell: wp db export - | gzip > database_backup/{{ backup_file }}
     args:
       chdir: "{{ project_web_dir }}"
@@ -34,7 +37,7 @@
   - name: Pull exported database from {{ env }} to development
     fetch:
       src: "{{project_web_dir}}/{{ backup_file }}"
-      dest: "../{{ site }}/database_backup"
+      dest: "{{ local_bedrock_dir }}/database_backup"
       flat: yes
     when: env is defined and env != "development"
 

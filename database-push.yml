@@ -7,34 +7,36 @@
   vars:
     project_root: "{{ www_root }}/{{ site }}"
     project_web_dir: "{{ project_root }}/current"
-    to_host: "{{ hostvars[env] }}"
-    url_from: "{{ hostvars.development.wordpress_sites[site].site_hosts.0.canonical }}"
+    host: "{{ env }}_host"
+    to_host: "{{ hostvars[host] }}"
+    url_from: "{{ hostvars.development_host.wordpress_sites[site].site_hosts.0.canonical }}"
     url_to: "{{ to_host.wordpress_sites[site].site_hosts.0.canonical }}"
+    local_bedrock_dir: "{{ to_host.wordpress_sites[site].local_path }}"
     dump_file: "{{ site | regex_replace('\\.+', '_') }}_db_dump.sql.gz"
     current_date_and_time: "{{ ansible_date_time.date | regex_replace('\\-+', '_') }}_{{ ansible_date_time.hour }}_{{ ansible_date_time.minute }}_{{ ansible_date_time.second }}"
     backup_file: "{{ site | regex_replace('\\.+', '_') }}_{{ env }}_{{ current_date_and_time }}.sql.gz"
 
   tasks:
   - name: Create database_backup directory inside {{ site }} if it doesn't exist
-    delegate_to: development
+    delegate_to: development_host
     file:
       path: "{{ project_web_dir }}/database_backup"
       state: directory
       mode: 0755
 
   - name: Create database dump on development
-    delegate_to: development
+    delegate_to: development_host
     shell: wp db export --allow-root - | gzip > {{ dump_file }}
     args:
       chdir: "{{ project_web_dir }}"
 
   - name: Push database dump from development to {{ env }}
     copy:
-      src: ../{{ site }}/{{ dump_file }}
+      src: "{{ local_bedrock_dir }}/{{ dump_file }}"
       dest: "{{ project_web_dir }}/{{ dump_file }}"
 
   - name: Delete database dump from development
-    delegate_to: development
+    delegate_to: development_host
     file:
       path: "{{ project_web_dir }}/{{ dump_file }}"
       state: absent
@@ -47,7 +49,7 @@
   - name: Pull exported database from {{ env }} to development (backup)
     fetch:
       src: "{{project_web_dir}}/{{ backup_file }}"
-      dest: "../{{ site }}/database_backup"
+      dest: "{{ local_bedrock_dir }}/database_backup"
       flat: yes
 
   - name: Delete exported database from {{ env }} (backup)
