@@ -36,13 +36,6 @@ if [[ ! -e $HOSTS_FILE ]]; then
   exit 0
 fi
 
-SITE_NAME_FOLDER="../$2"
-
-if [[ ! -d $SITE_NAME_FOLDER ]]; then
-  echo "Error: $2 is not a valid site name ($2 does not exist in this project)."
-  exit 0
-fi
-
 echo -e -n "Are you sure? (Y/n) "
 read -n 1 answer
 echo " "
