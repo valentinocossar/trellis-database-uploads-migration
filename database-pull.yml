@@ -33,7 +33,7 @@
     when: result.stat.exists is defined and result.stat.exists == false or result.stat.isdir is defined and result.stat.isdir == false
 
   - block:
-    - name: Create database_backup directory inside {{ site }} if it doesn't exist
+    - name: Create database_backup directory if it doesn't exist
       delegate_to: development_host
       file:
         path: "{{ project_web_dir }}/database_backup"
