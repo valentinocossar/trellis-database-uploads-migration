@@ -34,7 +34,12 @@
         recursive: yes
         rsync_opts: --exclude=.DS_Store --stats
       when: mode is defined and mode == "push"
-      register: output
+      register: output_push
+
+    - name: Push uploads output
+      debug:
+        var: output_push.stdout_lines
+      when: output_push.skipped is not defined
 
     - name: Pull uploads
       synchronize:
@@ -45,7 +50,10 @@
         recursive: yes
         rsync_opts: --exclude=.DS_Store --stats
       when: mode is defined and mode == "pull"
-      register: output
+      register: output_pull
 
-    - debug: var=output.stdout_lines
+    - name: Pull uploads output
+      debug:
+        var: output_pull.stdout_lines
+      when: output_pull.skipped is not defined
     when: result.stat.exists is defined and result.stat.exists and result.stat.isdir is defined and result.stat.isdir
