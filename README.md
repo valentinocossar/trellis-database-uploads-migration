@@ -1,8 +1,8 @@
-# 🎩 trellis-database-and-uploads-migration
+# 🎩 trellis-database-uploads-migration
 Ansible playbook for Trellis that manage database and uploads migration. Inspired by [hamedb89/trellis-db-push-and-pull](https://github.com/hamedb89/trellis-db-push-and-pull).
 
 ## ⚙️ Installation
-1. [Download it](https://github.com/valentinocossar/trellis-database-and-uploads-migration/archive/master.zip)
+1. [Download it](https://github.com/valentinocossar/trellis-database-uploads-migration/archive/master.zip)
 2. Copy all `*.yml` files into Trellis root folder
 3. Copy all `bin/*.sh` files into Trellis bin folder
 4. Add `database_backup/*` to the end of the Bedrock `.gitignore` file
@@ -57,7 +57,7 @@ production_host
 
 ## 🤝 Contributing
 
-1. [Fork it](https://github.com/valentinocossar/trellis-database-and-uploads-migration/fork)
+1. [Fork it](https://github.com/valentinocossar/trellis-database-uploads-migration/fork)
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
