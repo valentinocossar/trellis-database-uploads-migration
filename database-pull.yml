@@ -48,7 +48,7 @@
     - name: Pull database dump from {{ env }} to development
       fetch:
         src: "{{project_web_dir}}/{{ dump_file }}"
-        dest: "{{ local_bedrock_dir }}"
+        dest: "{{ local_bedrock_dir }}/"
         flat: yes
 
     - name: Delete database dump from {{ env }}

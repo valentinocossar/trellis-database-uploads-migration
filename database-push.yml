@@ -66,7 +66,7 @@
     - name: Pull exported database from {{ env }} to development (backup)
       fetch:
         src: "{{project_web_dir}}/{{ backup_file }}"
-        dest: "{{ local_bedrock_dir }}/database_backup"
+        dest: "{{ local_bedrock_dir }}/database_backup/"
         flat: yes
 
     - name: Delete exported database from {{ env }} (backup)

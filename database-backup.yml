@@ -48,7 +48,7 @@
     - name: Pull exported database from staging/production to development
       fetch:
         src: "{{project_web_dir}}/{{ backup_file }}"
-        dest: "{{ local_bedrock_dir }}/database_backup"
+        dest: "{{ local_bedrock_dir }}/database_backup/"
         flat: yes
       when: env is defined and env != "development"
 
