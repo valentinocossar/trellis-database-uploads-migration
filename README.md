@@ -2,11 +2,12 @@
 Ansible playbook for Trellis that manage database and uploads migration. Inspired by [hamedb89/trellis-db-push-and-pull](https://github.com/hamedb89/trellis-db-push-and-pull).
 
 ## ⚙️ Installation
-1. [Download it](https://github.com/valentinocossar/trellis-database-uploads-migration/archive/master.zip)
-2. Copy all `*.yml` files into Trellis root folder
-3. Copy all `bin/*.sh` files into Trellis bin folder
-4. Add `database_backup/*` to the end of the Bedrock `.gitignore` file
-5. Set alias for host files as mentioned below in the hosts configuration section
+1. [Download latest release](https://github.com/valentinocossar/trellis-database-uploads-migration/releases/latest)
+2. Copy `CHANGELOG-TRELLIS-DATABASE-UPLOADS-MIGRATION.md` file into Trellis root folder (so you can always know the version of the tool you are using)
+3. Copy all `*.yml` files into Trellis root folder
+4. Copy all `bin/*.sh` files into Trellis bin folder
+5. Add `database_backup/*` to the end of the Bedrock `.gitignore` file
+6. Set alias for host files as mentioned below in the hosts configuration section
 
 ### ‼️ Important
 * The development vagrant VM must be powered on every time you run a command, this because the tool checks if the site folder exists and its name is the same of the `local_path` parameter in `wordpress_sites.yml`.
