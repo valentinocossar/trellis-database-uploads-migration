@@ -17,10 +17,10 @@ Available environments:
 `( IFS=$'\n'; echo "${ENVIRONMENTS[*]}" )`
 
 Examples:
-  ./uploads.sh staging example.com push
-  ./uploads.sh staging example.com pull
-  ./uploads.sh production example.com push
-  ./uploads.sh production example.com pull
+  ./bin/uploads.sh staging example.com push
+  ./bin/uploads.sh staging example.com pull
+  ./bin/uploads.sh production example.com push
+  ./bin/uploads.sh production example.com pull
 "
 }
 

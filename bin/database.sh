@@ -19,12 +19,12 @@ Available environments:
 `( IFS=$'\n'; echo "${ENVIRONMENTS[*]}" )`
 
 Examples:
-  ./database.sh staging example.com push
-  ./database.sh staging example.com pull
-  ./database.sh staging example.com backup
-  ./database.sh production example.com push
-  ./database.sh production example.com pull
-  /database.sh production example.com backup
+  ./bin/database.sh staging example.com push
+  ./bin/database.sh staging example.com pull
+  ./bin/database.sh staging example.com backup
+  ./bin/database.sh production example.com push
+  ./bin/database.sh production example.com pull
+  ./bin/database.sh production example.com backup
 "
 }
 
