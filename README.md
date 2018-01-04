@@ -10,10 +10,12 @@ Ansible playbook for Trellis that manage database and uploads migration. Inspire
 6. Set alias for host files as mentioned below in the hosts configuration section
 
 ### ‼️ Important
-* The development vagrant VM must be powered on every time you run a command, this because the tool checks if the site folder exists and its name is the same of the `local_path` parameter in `wordpress_sites.yml`.
+* This tool doesn't work with Ansible 2.4.1.0 due to a bug (see #9)
+* The development vagrant VM must be powered on every time you run a command, this because the tool checks if the site folder exists and its name is the same of the `local_path` parameter in `wordpress_sites.yml`
 * The `database_backup` folder inside Bedrock will be automatically created if doesn't exist
 * I recommend you to not perform `git` operations while running `./bin/database.sh` command, this because the tool uses the Bedrock folder as temp folder to store database dump before importing/exporting it and then delete it
-* To support url search and replace for Trellis 0.9.8 and lower, remove `.canonical` from variables `url_from` and `url_to` in the files `database-pull.yml` and `database-push.yml`.
+* To support url search and replace for Trellis 0.9.8 and lower, remove `.canonical` from variables `url_from` and `url_to` in the files `database-pull.yml` and `database-push.yml`
+* This tool hasn't been tested with a multisite configuration, any help with this implementation would be appreciated
 
 ## 🏄 Usage
 * Run `./bin/uploads.sh <environment> <site name> <mode>`
