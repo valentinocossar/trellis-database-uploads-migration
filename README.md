@@ -16,6 +16,7 @@ Ansible playbook for Trellis that manage database and uploads migration. Inspire
 * I recommend you to not perform `git` operations while running `./bin/database.sh` command, this because the tool uses the Bedrock folder as temp folder to store database dump before importing/exporting it and then delete it
 * To support url search and replace for Trellis 0.9.8 and lower, remove `.canonical` from variables `url_from` and `url_to` in the files `database-pull.yml` and `database-push.yml`
 * This tool hasn't been tested with a multisite configuration, any help with this implementation would be appreciated
+* This tool has only been tested with macOS, any help with other OS would be appreciated
 
 ## 🏄 Usage
 * Run `./bin/uploads.sh <environment> <site name> <mode>`
