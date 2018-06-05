@@ -25,6 +25,8 @@ Ansible playbook for Trellis that manage database and uploads migration. Inspire
 ### 📌 Tips
 * Available `<mode>` options for uploads task: `push`, `pull`
 * Available `<mode>` options for database task: `push`, `pull`, `backup`
+* The `push` is for sending to the selected environment and the `pull` for receiving from it.
+* The `backup` is for backup the database of the selected environment.
 
 ## 🛠 Hosts configuration
 ### Development
