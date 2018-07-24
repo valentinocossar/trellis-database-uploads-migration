@@ -10,6 +10,7 @@ Ansible playbook for Trellis that manage database and uploads migration. Inspire
 6. Set alias for host files as mentioned below in the hosts configuration section
 
 ### ‼️ Important
+* Tested up to Ansible 2.6.1
 * This tool doesn't work with Ansible 2.4.1.0 due to a bug (see [#9](https://github.com/valentinocossar/trellis-database-uploads-migration/issues/9))
 * The development vagrant VM must be powered on every time you run a command, this because the tool checks if the site folder exists and its name is the same of the `local_path` parameter in `wordpress_sites.yml`
 * The `database_backup` folder inside Bedrock will be automatically created if doesn't exist
@@ -31,7 +32,7 @@ Ansible playbook for Trellis that manage database and uploads migration. Inspire
 ## 🛠 Hosts configuration
 ### Development
 ```
-development_host ansible_host=192.168.50.5 ansible_connection=ssh ansible_user=vagrant ansible_ssh_private_key_file=.vagrant/machines/default/virtualbox/private_key ansible_ssh_extra_args="-o StrictHostKeyChecking=no -o GlobalKnownHostsFile=/dev/null -o UserKnownHostsFile=/dev/null"
+development_host ansible_host=192.168.50.5 ansible_connection=ssh ansible_user=vagrant ansible_ssh_private_key_file=.vagrant/machines/default/virtualbox/private_key ansible_ssh_extra_args="-o StrictHostKeyChecking=no -o GlobalKnownHostsFile=/dev/null -o UserKnownHostsFile=/dev/null -o IdentitiesOnly=yes -o ForwardAgent=yes"
 
 [development]
 development_host
