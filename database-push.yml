@@ -27,7 +27,7 @@
       path: "{{ project_root }}"
     register: result
 
-  - name: Abort if {{ site }} folder doesn't exists
+  - name: Abort if {{ site }} folder doesn't exist
     fail:
       msg: "ERROR: {{ site }} is not a valid site name ({{ site }} folder does not exist)."
     when: result.stat.exists is defined and result.stat.exists == false or result.stat.isdir is defined and result.stat.isdir == false

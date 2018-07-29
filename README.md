@@ -32,35 +32,32 @@ Ansible playbook for Trellis that manage database and uploads migration. Inspire
 ## 🛠 Hosts configuration
 ### Development
 ```
-development_host ansible_host=192.168.50.5 ansible_connection=ssh ansible_user=vagrant ansible_ssh_private_key_file=.vagrant/machines/default/virtualbox/private_key ansible_ssh_extra_args="-o StrictHostKeyChecking=no -o GlobalKnownHostsFile=/dev/null -o UserKnownHostsFile=/dev/null -o IdentitiesOnly=yes -o ForwardAgent=yes"
-
 [development]
-development_host
+development_host ansible_host=192.168.50.5 ansible_connection=ssh ansible_user=vagrant ansible_ssh_private_key_file=.vagrant/machines/default/virtualbox/private_key ansible_ssh_extra_args="-o StrictHostKeyChecking=no -o GlobalKnownHostsFile=/dev/null -o UserKnownHostsFile=/dev/null -o IdentitiesOnly=yes -o ForwardAgent=yes"
+192.168.50.5 ansible_connection=local
 
 [web]
-development_host
+192.168.50.5 ansible_connection=local
 ```
 
 ### Staging
 ```
-staging_host ansible_host=your_server_hostname
-
 [staging]
-staging_host
+staging_host ansible_host=your_server_hostname
+your_server_hostname
 
 [web]
-staging_host
+your_server_hostname
 ```
 
 ### Production
 ```
-production_host ansible_host=your_server_hostname
-
 [production]
-production_host
+production_host ansible_host=your_server_hostname
+your_server_hostname
 
 [web]
-production_host
+your_server_hostname
 ```
 
 ## 🤝 Contributing
