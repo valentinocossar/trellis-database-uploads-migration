@@ -64,7 +64,7 @@ production_host
 ```
 
 ## 🛠 Alternative hosts configuration
-Some users have [reported errors with the above configuration](https://github.com/valentinocossar/trellis-database-uploads-migration/issues/16). It is recommended to try this alternative hosts configuration if you encounter an error like this:
+Some users have [reported receiving errors when using the above hosts configuration](https://github.com/valentinocossar/trellis-database-uploads-migration/issues/16). It is recommended to try this alternative configuration if you encounter an error similar to this:
 ```
 The task includes an option with an undefined variable. The error was: 'dict
 object' has no attribute 'wordpress_sites'
