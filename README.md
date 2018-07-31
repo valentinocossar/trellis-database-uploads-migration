@@ -32,9 +32,8 @@ Ansible playbook for Trellis that manage database and uploads migration. Inspire
 ## 🛠 Hosts configuration
 ### Development
 ```
-development_host ansible_host=192.168.50.5 ansible_connection=ssh ansible_user=vagrant ansible_ssh_private_key_file=.vagrant/machines/default/virtualbox/private_key ansible_ssh_extra_args="-o StrictHostKeyChecking=no -o GlobalKnownHostsFile=/dev/null -o UserKnownHostsFile=/dev/null -o IdentitiesOnly=yes -o ForwardAgent=yes"
-
 [development]
+development_host ansible_host=192.168.50.5 ansible_connection=ssh ansible_user=vagrant ansible_ssh_private_key_file=.vagrant/machines/default/virtualbox/private_key ansible_ssh_extra_args="-o StrictHostKeyChecking=no -o GlobalKnownHostsFile=/dev/null -o UserKnownHostsFile=/dev/null -o IdentitiesOnly=yes -o ForwardAgent=yes"
 development_host
 
 [web]
@@ -43,9 +42,8 @@ development_host
 
 ### Staging
 ```
-staging_host ansible_host=your_server_hostname
-
 [staging]
+staging_host ansible_host=your_server_hostname
 staging_host
 
 [web]
@@ -54,51 +52,13 @@ staging_host
 
 ### Production
 ```
-production_host ansible_host=your_server_hostname
-
 [production]
+production_host ansible_host=your_server_hostname
 production_host
 
 [web]
 production_host
 ```
-
-## 🛠 Alternative hosts configuration
-Some users have [reported receiving errors when using the above hosts configuration](https://github.com/valentinocossar/trellis-database-uploads-migration/issues/16). It is recommended to try this alternative configuration if you encounter an error similar to this:
-```
-The task includes an option with an undefined variable. The error was: 'dict
-object' has no attribute 'wordpress_sites'
-```
-### Development
-```
-[development]
-development_host ansible_host=192.168.50.5 ansible_connection=ssh ansible_user=vagrant ansible_ssh_private_key_file=.vagrant/machines/default/virtualbox/private_key ansible_ssh_extra_args="-o StrictHostKeyChecking=no -o GlobalKnownHostsFile=/dev/null -o UserKnownHostsFile=/dev/null -o IdentitiesOnly=yes -o ForwardAgent=yes"
-192.168.50.5 ansible_connection=local
-
-[web]
-192.168.50.5 ansible_connection=local
-```
-
-### Staging
-```
-[staging]
-staging_host ansible_host=your_server_hostname
-your_server_hostname
-
-[web]
-your_server_hostname
-```
-
-### Production
-```
-[production]
-production_host ansible_host=your_server_hostname
-your_server_hostname
-
-[web]
-your_server_hostname
-```
-
 ## 🤝 Contributing
 
 1. [Fork it](https://github.com/valentinocossar/trellis-database-uploads-migration/fork)
