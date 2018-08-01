@@ -1,5 +1,5 @@
 # 🎩 trellis-database-uploads-migration
-Ansible playbook for Trellis that manage database and uploads migration. Inspired by [hamedb89/trellis-db-push-and-pull](https://github.com/hamedb89/trellis-db-push-and-pull).
+Ansible playbook for Trellis that manages database and uploads migration. Inspired by [hamedb89/trellis-db-push-and-pull](https://github.com/hamedb89/trellis-db-push-and-pull).
 
 ## ⚙️ Installation
 1. [Download latest release](https://github.com/valentinocossar/trellis-database-uploads-migration/releases/latest)
