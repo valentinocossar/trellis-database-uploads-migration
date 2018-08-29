@@ -19,7 +19,7 @@
       path: "{{ project_root }}"
     register: result
 
-  - name: Abort if {{ site }} folder doesn't exists
+  - name: Abort if {{ site }} folder doesn't exist
     fail:
       msg: "ERROR: {{ site }} is not a valid site name ({{ site }} folder does not exist)."
     when: result.stat.exists is defined and result.stat.exists == false or result.stat.isdir is defined and result.stat.isdir == false
@@ -39,21 +39,20 @@
         chdir: "{{ project_web_dir }}"
       when: env is defined and env == "development"
 
-    - name: Export staging/production database
+    - name: Export {{ env }} database
       shell: wp db export - | gzip > {{ backup_file }}
       args:
         chdir: "{{ project_web_dir }}"
       when: env is defined and env != "development"
 
-    - name: Pull exported database from staging/production to development
+    - name: Pull exported database from {{ env }} to development
       fetch:
-        src: "{{project_web_dir}}/{{ backup_file }}"
+        src: "{{ project_web_dir }}/{{ backup_file }}"
         dest: "{{ local_bedrock_dir }}/database_backup/"
         flat: yes
       when: env is defined and env != "development"
 
-    - name: Delete exported database from staging/production
-      delegate_to: development_host
+    - name: Delete exported database from {{ env }}
       shell: rm -f {{ backup_file }}
       args:
         chdir: "{{ project_web_dir }}"
