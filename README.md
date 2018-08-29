@@ -1,7 +1,9 @@
 # 🎩 trellis-database-uploads-migration
+
 Ansible playbook for Trellis that manages database and uploads migration. Inspired by [hamedb89/trellis-db-push-and-pull](https://github.com/hamedb89/trellis-db-push-and-pull).
 
 ## ⚙️ Installation
+
 1. [Download latest release](https://github.com/valentinocossar/trellis-database-uploads-migration/releases/latest)
 2. Copy `CHANGELOG-TRELLIS-DATABASE-UPLOADS-MIGRATION.md` file into Trellis root folder (so you can always know the version of the tool you are using)
 3. Copy all `*.yml` files into Trellis root folder
@@ -10,6 +12,7 @@ Ansible playbook for Trellis that manages database and uploads migration. Inspir
 6. Set alias for host files as mentioned below in the hosts configuration section
 
 ### ‼️ Important
+
 * Tested up to Ansible 2.6.1
 * This tool doesn't work with Ansible 2.4.1.0 due to a bug (see [#9](https://github.com/valentinocossar/trellis-database-uploads-migration/issues/9))
 * The development vagrant VM must be powered on every time you run a command, this because the tool checks if the site folder exists and its name is the same of the `local_path` parameter in `wordpress_sites.yml`
@@ -20,42 +23,49 @@ Ansible playbook for Trellis that manages database and uploads migration. Inspir
 * This tool has only been tested with macOS and Ubuntu 18.04 LTS, any help with other operating systems would be appreciated
 
 ## 🏄 Usage
+
 * Run `./bin/uploads.sh <environment> <site name> <mode>`
 * Run `./bin/database.sh <environment> <site name> <mode>`
 
 ### 📌 Tips
+
 * Available `<mode>` options for uploads task: `push`, `pull`
 * Available `<mode>` options for database task: `push`, `pull`, `backup`
 * The `push` is for sending to the selected environment and the `pull` for receiving from it
 * The `backup` is for backup the database of the selected environment
 
 ## 🛠 Hosts configuration
+
 ### Development
-```
+
+```ini
 [development]
 development_host ansible_host=192.168.50.5 ansible_connection=ssh ansible_user=vagrant ansible_ssh_private_key_file=.vagrant/machines/default/virtualbox/private_key ansible_ssh_extra_args="-o StrictHostKeyChecking=no -o GlobalKnownHostsFile=/dev/null -o UserKnownHostsFile=/dev/null -o IdentitiesOnly=yes -o ForwardAgent=yes"
 
 [web]
-development_host
+development_host ansible_host=192.168.50.5 ansible_connection=ssh ansible_user=vagrant ansible_ssh_private_key_file=.vagrant/machines/default/virtualbox/private_key ansible_ssh_extra_args="-o StrictHostKeyChecking=no -o GlobalKnownHostsFile=/dev/null -o UserKnownHostsFile=/dev/null -o IdentitiesOnly=yes -o ForwardAgent=yes"
 ```
 
 ### Staging
-```
+
+```ini
 [staging]
 staging_host ansible_host=your_server_hostname
 
 [web]
-staging_host
+staging_host ansible_host=your_server_hostname
 ```
 
 ### Production
-```
+
+```ini
 [production]
 production_host ansible_host=your_server_hostname
 
 [web]
-production_host
+production_host ansible_host=your_server_hostname
 ```
+
 ## 🤝 Contributing
 
 1. [Fork it](https://github.com/valentinocossar/trellis-database-uploads-migration/fork)
