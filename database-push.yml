@@ -87,7 +87,7 @@
         warn: false
 
     - name: Search for {{ url_from }} and replace with {{ url_to }} on development
-      command: wp search-replace '//{{ url_from }}' '//{{ url_to }}' --allow-root --all-tables
+      command: wp search-replace '//{{ url_from }}' '//{{ url_to }}' --allow-root --all-tables --precise
       args:
         chdir: "{{ project_web_dir }}"
       tags: ['search-replace']
